@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use('*',cors());
-app.use(authJwt());
+// app.use(authJwt());
 app.use(errorHandler);
 app.use('/public/upload',express.static(__dirname + '/public/upload'));
 //Routers
@@ -32,9 +32,9 @@ mongoose.connect(process.env.CONNECTION_URL,{
 })
 .then(()=>{
     console.log("Connected to database");
-})
-.catch(()=>{
-    console.log("error"); 
+}) 
+.catch((error)=>{
+    console.log(error); 
 });    
 
 //Routes 

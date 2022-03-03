@@ -173,10 +173,10 @@ router.get('/get/count',async (req,res)=>{
     res.send({
         productCount:productCount
     });
-})
+}) 
 
 
-router.get('/get/featured',async (req,res)=>{
+router.get('/get/featured/:count',async (req,res)=>{
     const count=req.params.count?req.params.count:0;
     const featuredProduct=await product.find({isfeatured:true}).limit(+count);
 
@@ -184,9 +184,7 @@ router.get('/get/featured',async (req,res)=>{
     {
         res.status(500).json({success:false})
     }
-    res.send({
-        featuredProduct
-    });
+    res.send(featuredProduct);
 })
 
 

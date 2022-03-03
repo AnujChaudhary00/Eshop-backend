@@ -47,12 +47,14 @@ router.put('/:id',async (req, res)=> {
 
     const userExist = await User.findById(req.params.id);
     let newPassword
-    if(req.body.password) {
-        newPassword = bcrypt.hashSync(req.body.password, 10)
+    console.log(req.body.isadmin,"message")
+    console.log(req.body.passwordhash)
+    if(req.body.passwordhash) {
+        newPassword = bcrypt.hashSync(req.body.passwordhash, 10)
     } else {
-        newPassword = userExist.passwordHash;
+        newPassword = userExist.passwordhash;
     }
-
+    console.log(newPassword);
     const user = await User.findByIdAndUpdate(
         req.params.id,
         {
@@ -83,6 +85,8 @@ router.post('/login', async (req,res) => {
         return res.status(400).send('The user not found');
     }
 
+    // bcrypt.compareSync(req.body.password, user.passwordhash)
+    console.log(user.passwordhash);
     if(user && bcrypt.compareSync(req.body.password, user.passwordhash)) {
         const token = jwt.sign(
             {
@@ -90,7 +94,7 @@ router.post('/login', async (req,res) => {
                 isadmin: user.isadmin
             },
             secret,
-            {expiresIn : '1d'}
+            {expiresIn : '1d'} 
         )
        
         res.status(200).send({user: user.email , token: token}) 

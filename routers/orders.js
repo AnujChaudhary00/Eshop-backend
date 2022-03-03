@@ -1,6 +1,6 @@
-const {Order} = require('../models/order');
+const {Order} = require('../Models/order');
 const express = require('express');
-const { OrderItem } = require('../models/order-item');
+const { OrderItem } = require('../Models/order-item');
 const router = express.Router();
 
 router.get(`/`, async (req, res) =>{
